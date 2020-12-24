@@ -5,8 +5,6 @@ import porespy as ps
 from io import BytesIO
 from PIL import Image
 import numpy as np
-from skimage import data
-from skimage.filters import threshold_otsu
 import matplotlib.pyplot as plt
 
 # IMPORTANT: Run these 3 commands when creating a new model
@@ -15,6 +13,7 @@ import matplotlib.pyplot as plt
 # python manage.py makemigrations
 #
 # python manage.py migrate
+
 
 class Hero(models.Model):
     name = models.CharField(max_length=60)
@@ -25,7 +24,7 @@ class Hero(models.Model):
         return self.name
 
 
-class PoreSpyTutorial(models.Model):
+class PoreSpyGenerator(models.Model):
     porosity = models.FloatField(null=True, blank=True, default=0.6)
     blobiness = models.IntegerField(null=True, blank=True, default=2)
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
@@ -38,19 +37,21 @@ class PoreSpyTutorial(models.Model):
         float_porosity = float(self.porosity)
         int_blobiness = int(self.blobiness)
         shape_array = [int_dimension_x, int_dimension_y]
+
+        # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
         im_data = np.array(im)
         pil_img = Image.fromarray(im_data).convert("RGB")
         buff = BytesIO()
 
-        for x in range(int_dimension_x):
-            for y in range(int_dimension_y):
-                black = (0, 0, 0)
-                white = (255, 255, 255)
-                yellow = (255, 255, 0)
-                purple = (128, 0, 128)
+        # Change black pixels to purple, white pixels to yellow.
+        # Porous pixels are now yellow, solid pixels are now purple.
+        for x in range(pil_img.width):
+            for y in range(pil_img.height):
+                black, white = (0, 0, 0), (255, 255, 255)
+                yellow, purple = (255, 255, 0), (128, 0, 128)
                 coordinate = x, y
-                if pil_img.getpixel(coordinate) == black:
+                if pil_img.getpixel((x, y)) == black:
                     pil_img.putpixel((x, y), purple)
                 else:
                     pil_img.putpixel((x, y), yellow)

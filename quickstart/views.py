@@ -6,8 +6,8 @@ from rest_framework.decorators import action
 # from rest_framework import ListAPIView
 from rest_framework.response import Response
 # from porespyBackend.quickstart.serializers import UserSerializer, GroupSerializer
-from quickstart.serializers import UserSerializer, GroupSerializer, HeroSerializer, PoreSpyTutorialSerializer  # , TestSerializer
-from .models import Hero, PoreSpyTutorial
+from quickstart.serializers import UserSerializer, GroupSerializer, HeroSerializer, PoreSpyGeneratorSerializer  # , TestSerializer
+from .models import Hero, PoreSpyGenerator
 import os
 import porespy as ps
 import matplotlib.pyplot as plt
@@ -37,7 +37,7 @@ class HeroViewSet(viewsets.ModelViewSet):
 
 
 class PoreSpyViewSet(viewsets.ModelViewSet):
-    queryset = PoreSpyTutorial.objects.all()
-    serializer_class = PoreSpyTutorialSerializer
+    queryset = PoreSpyGenerator.objects.all().order_by('porosity')
+    serializer_class = PoreSpyGeneratorSerializer
 
 

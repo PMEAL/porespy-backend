@@ -2,7 +2,8 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from rest_framework.response import Response
 # from quickstart.models import Test
-from .models import Hero, PoreSpyTutorial
+from .models import Hero, PoreSpyGenerator
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -22,8 +23,8 @@ class HeroSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['name', 'alias', 'height']
 
 
-class PoreSpyTutorialSerializer(serializers.HyperlinkedModelSerializer):
+class PoreSpyGeneratorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = PoreSpyTutorial
+        model = PoreSpyGenerator
         fields = ['porosity', 'blobiness', 'dimension_x', 'dimension_y', 'generated_image']
 

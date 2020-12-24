@@ -22,13 +22,14 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'heroes', views.HeroViewSet)
-router.register(r'porespytutorial', views.PoreSpyViewSet)
+router.register(r'porespygenerator', views.PoreSpyViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('^porespygenerator', views.PoreSpyViewSet, name='generator')
     # path('path/to/my/view/', MySimpleView.as_view())
 ]
