@@ -40,6 +40,13 @@ class PoreSpyGenerator(models.Model):
 
         # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
+
+        # try:
+        #     lt = ps.filters.local_thickness(im)
+        #     return lt
+        # except Exception as e:
+        #     return str(e)
+
         im_data = np.array(im)
         pil_img = Image.fromarray(im_data).convert("RGB")
         buff = BytesIO()
@@ -50,7 +57,6 @@ class PoreSpyGenerator(models.Model):
             for y in range(pil_img.height):
                 black, white = (0, 0, 0), (255, 255, 255)
                 yellow, purple = (255, 255, 0), (128, 0, 128)
-                coordinate = x, y
                 if pil_img.getpixel((x, y)) == black:
                     pil_img.putpixel((x, y), purple)
                 else:
