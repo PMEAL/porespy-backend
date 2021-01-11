@@ -15,16 +15,7 @@ import matplotlib.pyplot as plt
 # python manage.py migrate
 
 
-class Hero(models.Model):
-    name = models.CharField(max_length=60)
-    alias = models.CharField(max_length=60)
-    height = models.CharField(max_length=5, default="12cm")
-
-    def __str__(self):
-        return self.name
-
-
-class PoreSpyGenerator(models.Model):
+class GeneratorBlobs(models.Model):
     porosity = models.FloatField(null=True, blank=True, default=0.6)
     blobiness = models.IntegerField(null=True, blank=True, default=2)
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
@@ -40,6 +31,7 @@ class PoreSpyGenerator(models.Model):
 
         # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
+        # plt.show(im)
 
         # try:
         #     lt = ps.filters.local_thickness(im)
