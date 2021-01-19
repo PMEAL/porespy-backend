@@ -20,5 +20,5 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class GeneratorBlobsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = GeneratorBlobs
-        fields = ['porosity', 'blobiness', 'dimension_x', 'dimension_y', 'generated_image']
+        fields = ['porosity', 'blobiness', 'dimension_x', 'dimension_y', 'dimension_z', 'generated_image']
 
