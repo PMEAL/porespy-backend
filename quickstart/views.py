@@ -4,8 +4,8 @@ from rest_framework import permissions
 # from .permissions import IsAdminOrIsSelf
 from rest_framework.decorators import action
 # from rest_framework import ListAPIView
-from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer
-from .models import GeneratorBlobs
+from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer
+from .models import GeneratorBlobs, PoreSpyFuncsNames
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,11 +26,16 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class PoreSpyFuncsViewSet(viewsets.ModelViewSet):
+    queryset = PoreSpyFuncsNames.objects.all()
+    serializer_class = PoreSpyFuncsSerializer
+
+
 class GeneratorsBlobsViewSet(viewsets.ModelViewSet):
     """
     API Endpoint that allows user to interact with the "Blobs" function inside the "Generators" module.
     """
-    queryset = GeneratorBlobs.objects.all().order_by('porosity')
+    queryset = GeneratorBlobs.objects.all()
     serializer_class = GeneratorBlobsSerializer
 
 
