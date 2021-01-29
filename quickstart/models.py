@@ -51,11 +51,14 @@ class PoreSpyFuncsNames(models.Model):
                     js.update({item: info})
             return js
 
-        func_details = {}
+        func_details = {
+            # Must do this, and the looping for metrics, filters, networks, and remaining modules
+            "generators": {}
+        }
         for func in dir(ps.generators):
             if not func.startswith('__'):
                 f = getattr(ps.generators, func)
-                func_details[func] = return_arg_names_vals_and_types(f)
+                func_details["generators"][func] = return_arg_names_vals_and_types(f)
 
         return func_details
 
