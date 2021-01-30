@@ -22,8 +22,6 @@ import matplotlib.pyplot as plt
 
 # TODO: how to get details of generator functions.
 class PoreSpyFuncsNames(models.Model):
-    # funcnames = models.FloatField(null=True, blank=True, default=0.6)
-
     @property
     def porespy_funcs(self):
         def return_arg_names_vals_and_types(f):
@@ -31,17 +29,19 @@ class PoreSpyFuncsNames(models.Model):
             js = {}
             for item in s.parameters.keys():
                 if item == 'shape':
-                    js.update({'shape[0]': {'default': 100, 'type': 'int'},
-                               'shape[1]': {'default': 100, 'type': 'int'},
-                               'shape[2]': {'default': '', 'type': 'int'}})
+                    js.update({'shape[0]': {'value': 100, 'type': 'int'},
+                               'shape[1]': {'value': 100, 'type': 'int'},
+                               'shape[2]': {'value': '', 'type': 'int'}})
                 else:
                     p = s.parameters[item]
                     info = {}
                     try:
-                        info['default'] = json.dumps(p.default)
+                        info['value'] = json.dumps(p.default)
                     except TypeError:  # Means there is no default value
-                        info['default'] = ''
+                        info['value'] = ''
+
                     dtype = p.annotation
+
                     if dtype is inspect._empty:
                         info['type'] = json.dumps(None)
                     elif hasattr(dtype, '__name__'):
@@ -52,14 +52,26 @@ class PoreSpyFuncsNames(models.Model):
             return js
 
         func_details = {
-            # Must do this, and the looping for metrics, filters, networks, and remaining modules
-            "generators": {}
+            "filters": {},
+            "generators": {},
+            "io": {},
+            "metrics": {},
+            "networks": {},
+            "tools": {}
         }
-        for func in dir(ps.generators):
-            if not func.startswith('__'):
-                f = getattr(ps.generators, func)
-                func_details["generators"][func] = return_arg_names_vals_and_types(f)
 
+        def porespy_modules_populate(modules, module_strs):
+            for i in range(len(modules)):
+                for func in dir(modules[i]):
+                    if not func.startswith('__'):
+                        f = getattr(modules[i], func)
+                        func_details[module_strs[i]][func] = return_arg_names_vals_and_types(f)
+
+        # Currently, ps.networks is throwing an error and cannot be populated through the porespy_modules_populate function.
+        # Will need to look into this further.
+        modules = [ps.filters, ps.generators, ps.io, ps.metrics, ps.tools];
+        modules_strs = ['filters', 'generators', 'io', 'metrics', 'tools']
+        porespy_modules_populate(modules, modules_strs)
         return func_details
 
 # Model that uses the Blobs method in the Generators from PoreSpy
