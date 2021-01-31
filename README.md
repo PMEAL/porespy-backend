@@ -4,7 +4,7 @@ Backend written in Django/Python for PoreSpy.
 
 TODO:
 
-- Rename models/serializers to be more scalable in the end.
+- Research how to section off models/serializers so they are not all concentrated in one file (Separation of Concerns).
 - Continue writing out PoreSpy's modules:
     - generators
     - filters
