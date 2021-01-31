@@ -29,16 +29,18 @@ class PoreSpyFuncsNames(models.Model):
             js = {}
             for item in s.parameters.keys():
                 if item == 'shape':
-                    js.update({'shape[0]': {'value': 100, 'type': 'int'},
-                               'shape[1]': {'value': 100, 'type': 'int'},
-                               'shape[2]': {'value': '', 'type': 'int'}})
+                    js.update({'shape[0]': {'value': 100, 'type': 'int', 'required': True},
+                               'shape[1]': {'value': 100, 'type': 'int', 'required': True},
+                               'shape[2]': {'value': '', 'type': 'int', 'required': False}})
                 else:
                     p = s.parameters[item]
                     info = {}
                     try:
                         info['value'] = json.dumps(p.default)
+                        info['required'] = True
                     except TypeError:  # Means there is no default value
                         info['value'] = ''
+                        info['required'] = False
 
                     dtype = p.annotation
 
