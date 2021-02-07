@@ -58,8 +58,7 @@ class PoreSpyFuncsNames(models.Model):
             "generators": {},
             "io": {},
             "metrics": {},
-            "networks": {},
-            "tools": {}
+            "networks": {}
         }
 
         def porespy_modules_populate(modules, module_strs):
@@ -71,8 +70,8 @@ class PoreSpyFuncsNames(models.Model):
 
         # Currently, ps.networks is throwing an error and cannot be populated through the porespy_modules_populate function.
         # Will need to look into this further.
-        modules = [ps.filters, ps.generators, ps.io, ps.metrics, ps.tools];
-        modules_strs = ['filters', 'generators', 'io', 'metrics', 'tools']
+        modules = [ps.filters, ps.generators, ps.io, ps.metrics]
+        modules_strs = ['filters', 'generators', 'io', 'metrics']
         porespy_modules_populate(modules, modules_strs)
         return func_details
 
