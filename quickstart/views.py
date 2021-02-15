@@ -4,8 +4,8 @@ from rest_framework import permissions
 # from .permissions import IsAdminOrIsSelf
 from rest_framework.decorators import action
 # from rest_framework import ListAPIView
-from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer
-from .models import GeneratorBlobs, PoreSpyFuncsNames
+from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer, GeneratorBundleOfTubesSerializer
+from .models import GeneratorBlobs, GeneratorBundleOfTubes, PoreSpyFuncsNames
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,10 +33,15 @@ class PoreSpyFuncsViewSet(viewsets.ModelViewSet):
 
 class GeneratorsBlobsViewSet(viewsets.ModelViewSet):
     """
-    API Endpoint that allows user to interact with the "Blobs" function inside the "Generators" module.
+    API Endpoint that allows user to interact with the blobs function inside the Generators module.
     """
     queryset = GeneratorBlobs.objects.all()
     serializer_class = GeneratorBlobsSerializer
 
 
-
+class GeneratorsBundleOfTubesViewSet(viewsets.ModelViewSet):
+    """
+    API Endpoint that allows user to interact with the bundle_of_tubes function in inside the Generators module
+    """
+    queryset = GeneratorBundleOfTubes.objects.all()
+    serializer_class = GeneratorBundleOfTubesSerializer
