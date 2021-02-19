@@ -1,7 +1,5 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from rest_framework.response import Response
-# from quickstart.models import Test
 from .models import Blobs, BundleOfTubes, PoreSpyFuncsNames
 
 
