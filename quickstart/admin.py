@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import GeneratorBlobs#, PoreSpyFuncs
+from .models import Blobs#, PoreSpyFuncs
 
-admin.site.register(GeneratorBlobs)
+admin.site.register(Blobs)
 # admin.site.register(PoreSpyFuncs)

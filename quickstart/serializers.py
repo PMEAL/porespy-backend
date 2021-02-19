@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from rest_framework.response import Response
 # from quickstart.models import Test
-from .models import GeneratorBlobs, GeneratorBundleOfTubes, PoreSpyFuncsNames
+from .models import Blobs, BundleOfTubes, PoreSpyFuncsNames
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,13 +19,13 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class GeneratorBlobsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = GeneratorBlobs
+        model = Blobs
         fields = ['porosity', 'blobiness', 'dimension_x', 'dimension_y', 'dimension_z', 'generated_image']
 
 
 class GeneratorBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = GeneratorBundleOfTubes
+        model = BundleOfTubes
         fields = ['dimension_x', 'dimension_y', 'dimension_z', 'spacing', 'generated_image']
 
 
