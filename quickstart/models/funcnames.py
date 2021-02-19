@@ -6,6 +6,7 @@ import inspect
 import porespy as ps
 import json
 
+
 class PoreSpyFuncsNames(models.Model):
     @property
     def porespy_funcs(self):

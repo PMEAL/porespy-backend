@@ -1,5 +1,6 @@
 # generators.py is concerned with the business logic of the generators modules
-# e.g. The GeneratorBlobs handles the business logic of generating a blob, and returns the image in a base64 string to the front end.
+# e.g. The GeneratorBlobs handles the business logic of generating a blob,
+# and returns the image in a base64 string to the front end.
 
 from django.db import models
 import base64
