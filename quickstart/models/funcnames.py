@@ -43,8 +43,7 @@ class PoreSpyFuncsNames(models.Model):
             "filters": {},
             "generators": {},
             "io": {},
-            "metrics": {},
-            "networks": {}
+            "metrics": {}
         }
 
         def porespy_modules_populate(modules, module_strs):
