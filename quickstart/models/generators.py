@@ -10,13 +10,6 @@ import numpy as np
 import porespy as ps
 
 
-# IMPORTANT: Run these 2 commands when creating a new model
-#
-# python manage.py makemigrations
-#
-# python manage.py migrate
-
-
 # Model that uses the Blobs method in the Generators from PoreSpy
 class Blobs(models.Model):
     porosity = models.FloatField(null=True, blank=True, default=0.6)

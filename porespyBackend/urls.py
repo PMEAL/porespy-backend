@@ -22,6 +22,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'generators/blobs', views.GeneratorsBlobsViewSet)
 router.register(r'generators/bundleoftubes', views.GeneratorsBundleOfTubesViewSet)
+router.register(r'filters/localthickness', views.FiltersLocalThicknessViewSet)
 router.register(r'porespyfuncs', views.PoreSpyFuncsViewSet)
 
 # Wire up our API using automatic URL routing.

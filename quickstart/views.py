@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer, GeneratorBundleOfTubesSerializer
-from .models import Blobs, BundleOfTubes, PoreSpyFuncsNames
+from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer, GeneratorBundleOfTubesSerializer, FilterBundleOfTubesSerializer
+from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -42,3 +42,10 @@ class GeneratorsBundleOfTubesViewSet(viewsets.ModelViewSet):
     """
     queryset = BundleOfTubes.objects.all()
     serializer_class = GeneratorBundleOfTubesSerializer
+
+class FiltersLocalThicknessViewSet(viewsets.ModelViewSet):
+    """
+
+    """
+    queryset = LocalThickness.objects.all()
+    serializer_class = FilterBundleOfTubesSerializer
