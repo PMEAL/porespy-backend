@@ -11,8 +11,22 @@ class LocalThickness(models.Model):
 
     @property
     def generator_image_filtered(self):
-        return "something static ___ " + str(self.generator_image)
-        # return self.generated_image
+        image_decoded = base64.encode(self.generator_image)
+        image_bytes_io = BytesIO(image_decoded)
+        image_as_im = np.array(Image.open(image_bytes_io))
+        lt = ps.filters.local_thickness(image_as_im)
+
+        # lt_data = np.array(lt)
+        # pil_img = Image.fromarray(lt_data).convert("RGB")
+        # buff = BytesIO()
+        # pil_img.save(buff, format="PNG")
+        # new_lt_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        # return new_lt_string
+
+
+
+
+
         # int_dimension_x = int(self.dimension_x)
         # int_dimension_y = int(self.dimension_y)
         # int_dimension_z = int(self.dimension_z)
