@@ -1,58 +1,38 @@
 from django.db import models
 import base64
+import json
 from io import BytesIO
-from PIL import Image
 import numpy as np
 import porespy as ps
+import matplotlib
+# Agg Buffer Description:
+# https://matplotlib.org/3.1.3/gallery/misc/agg_buffer.html
+# Agg Buffer is used to access the figure canvas as an RGBA buffer, convert it to an array,
+# and pass it to Pillow for rendering
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 
 
 class LocalThickness(models.Model):
-    generator_image = models.TextField(default="")
+    local_thickness_image = models.TextField(default="")
 
     @property
-    def generator_image_filtered(self):
-        image_decoded = base64.encode(self.generator_image)
-        image_bytes_io = BytesIO(image_decoded)
-        image_as_im = np.array(Image.open(image_bytes_io))
-        lt = ps.filters.local_thickness(image_as_im)
+    def local_thickness_image_filtered(self):
+        im = np.array(json.loads(self.local_thickness_image))
+        lt = ps.filters.local_thickness(im)
+        lt_data = np.array(lt)
+        buff = BytesIO()
+        plt.imshow(lt)
+        plt.savefig(buff, format='png')
+        new_filtered_img_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        im_object_return = {
+            'np_array': lt_data,
+            'base_64': new_filtered_img_string
+        }
 
-        # lt_data = np.array(lt)
-        # pil_img = Image.fromarray(lt_data).convert("RGB")
-        # buff = BytesIO()
-        # pil_img.save(buff, format="PNG")
-        # new_lt_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-        # return new_lt_string
+        return im_object_return
+
+# class ApplyChords(models.Model):
+    ### INSERT NECESSARY BUSINESS LOGIC HERE
 
 
-
-
-
-        # int_dimension_x = int(self.dimension_x)
-        # int_dimension_y = int(self.dimension_y)
-        # int_dimension_z = int(self.dimension_z)
-        # float_spacing = float(self.spacing)
-        #
-        # if int_dimension_z == 0:
-        #     shape_array = [int_dimension_x, int_dimension_y]
-        # else:
-        #     shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
-        #
-        # im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
-        # black, white = (0, 0, 0), (255, 255, 255)
-        # yellow, purple = (255, 255, 0), (128, 0, 128)
-        #
-        # if int_dimension_z == 0:
-        #     im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
-        #     pil_img = Image.fromarray(im_data).convert("RGB")
-        #     buff = BytesIO()
-        #
-        #     for x in range(pil_img.width):
-        #         for y in range(pil_img.height):
-        #             if pil_img.getpixel((x, y)) == black:
-        #                 pil_img.putpixel((x, y), purple)
-        #             else:
-        #                 pil_img.putpixel((x, y), yellow)
-        #
-        #     pil_img.save(buff, format="PNG")
-        #     new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-        #     return new_im_string

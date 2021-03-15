@@ -18,6 +18,19 @@ class Blobs(models.Model):
     dimension_y = models.IntegerField(null=True, blank=True, default=500)
     dimension_z = models.IntegerField(null=True, blank=True, default=0)
 
+
+
+
+
+
+    ### TODO: generated_image should return the base64 string and the numpy array.
+
+
+
+
+
+
+
     @property
     def generated_image(self):
         int_dimension_x = int(self.dimension_x)
@@ -33,6 +46,7 @@ class Blobs(models.Model):
 
         # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
+        # return im
 
         #TODO: abstract this transition of black/white to yellow/purple to apply DRY
         black, white = (0, 0, 0), (255, 255, 255)
@@ -52,7 +66,13 @@ class Blobs(models.Model):
 
             pil_img.save(buff, format="PNG")
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            return new_im_string
+            im_object_return = {
+                'np_array': im_data,
+                'base_64': new_im_string
+            }
+
+            return im_object_return
+            # return new_im_string
         else:
             #TODO: how to render 3D images if requested
 
@@ -70,7 +90,12 @@ class Blobs(models.Model):
 
             pil_img.save(buff, format="PNG")
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            return new_im_string
+            im_object_return = {
+                'np_array': im_data,
+                'base_64': new_im_string
+            }
+
+            return im_object_return
 
 
 class BundleOfTubes(models.Model):
@@ -109,4 +134,9 @@ class BundleOfTubes(models.Model):
 
             pil_img.save(buff, format="PNG")
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            return new_im_string
+            im_object_return = {
+                'np_array': im_data,
+                'base_64': new_im_string
+            }
+            return im_object_return
+            # return new_im_string
