@@ -5,9 +5,15 @@
 from django.db import models
 import base64
 from io import BytesIO
-from PIL import Image
 import numpy as np
 import porespy as ps
+import matplotlib
+# Agg Buffer Description:
+# https://matplotlib.org/3.1.3/gallery/misc/agg_buffer.html
+# Agg Buffer is used to access the figure canvas as an RGBA buffer, convert it to an array,
+# and pass it to Pillow for rendering
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 
 
 # Model that uses the Blobs method in the Generators from PoreSpy
@@ -17,19 +23,6 @@ class Blobs(models.Model):
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
     dimension_y = models.IntegerField(null=True, blank=True, default=500)
     dimension_z = models.IntegerField(null=True, blank=True, default=0)
-
-
-
-
-
-
-    ### TODO: use Matplotlib to generate functions using matplotlib.use('Agg') instead of directly with PIL (look at LocalThickness Model)
-
-
-
-
-
-
 
     @property
     def generated_image(self):
@@ -46,25 +39,12 @@ class Blobs(models.Model):
 
         # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
-        # return im
-
-        #TODO: abstract this transition of black/white to yellow/purple to apply DRY
-        black, white = (0, 0, 0), (255, 255, 255)
-        yellow, purple = (255, 255, 0), (128, 0, 128)
 
         if int_dimension_z == 0:
             im_data = np.array(im)
-            pil_img = Image.fromarray(im_data).convert("RGB")
             buff = BytesIO()
-
-            for x in range(pil_img.width):
-                for y in range(pil_img.height):
-                    if pil_img.getpixel((x, y)) == black:
-                        pil_img.putpixel((x, y), purple)
-                    else:
-                        pil_img.putpixel((x, y), yellow)
-
-            pil_img.save(buff, format="PNG")
+            plt.imshow(im)
+            plt.savefig(buff, format='png')
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
             im_object_return = {
                 'np_array': im_data,
@@ -72,23 +52,13 @@ class Blobs(models.Model):
             }
 
             return im_object_return
-            # return new_im_string
         else:
-            #TODO: how to render 3D images if requested
+            # TODO: how to render 3D images if requested
 
             im_data = np.array(im)
-            pil_img = Image.fromarray(im_data.astype(np.uint8)).convert("RGB")
             buff = BytesIO()
-
-            # for x in range(pil_img.width):
-            #     for y in range(pil_img.height):
-            #         for z in range(pil_img.
-            #         if pil_img.getpixel((x, y)) == black:
-            #             pil_img.putpixel((x, y), purple)
-            #         else:
-            #             pil_img.putpixel((x, y), yellow)
-
-            pil_img.save(buff, format="PNG")
+            plt.imshow(im)
+            plt.savefig(buff, format='png')
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
             im_object_return = {
                 'np_array': im_data,
@@ -117,26 +87,19 @@ class BundleOfTubes(models.Model):
             shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
 
         im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
-        black, white = (0, 0, 0), (255, 255, 255)
-        yellow, purple = (255, 255, 0), (128, 0, 128)
 
         if int_dimension_z == 0:
             im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
-            pil_img = Image.fromarray(im_data).convert("RGB")
             buff = BytesIO()
-
-            for x in range(pil_img.width):
-                for y in range(pil_img.height):
-                    if pil_img.getpixel((x, y)) == black:
-                        pil_img.putpixel((x, y), purple)
-                    else:
-                        pil_img.putpixel((x, y), yellow)
-
-            pil_img.save(buff, format="PNG")
+            plt.imshow(im)
+            plt.savefig(buff, format='png')
             new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
             im_object_return = {
                 'np_array': im_data,
                 'base_64': new_im_string
             }
+
             return im_object_return
-            # return new_im_string
+        else:
+            # TODO: how to render 3D images if requested
+            return "mustRender3Dimages"
