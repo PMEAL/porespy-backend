@@ -39,33 +39,17 @@ class Blobs(models.Model):
 
         # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
+        im_data = np.array(im)
+        buff = BytesIO()
+        plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
+        plt.savefig(buff, format='png')
+        new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        im_object_return = {
+            'np_array': im_data,
+            'base_64': new_im_string
+        }
 
-        if int_dimension_z == 0:
-            im_data = np.array(im)
-            buff = BytesIO()
-            plt.imshow(im)
-            plt.savefig(buff, format='png')
-            new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            im_object_return = {
-                'np_array': im_data,
-                'base_64': new_im_string
-            }
-
-            return im_object_return
-        else:
-            # TODO: how to render 3D images if requested
-
-            im_data = np.array(im)
-            buff = BytesIO()
-            plt.imshow(im)
-            plt.savefig(buff, format='png')
-            new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            im_object_return = {
-                'np_array': im_data,
-                'base_64': new_im_string
-            }
-
-            return im_object_return
+        return im_object_return
 
 
 class BundleOfTubes(models.Model):
@@ -87,19 +71,15 @@ class BundleOfTubes(models.Model):
             shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
 
         im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
+        im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
+        buff = BytesIO()
+        # plt.imshow(im)
+        plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
+        plt.savefig(buff, format='png')
+        new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        im_object_return = {
+            'np_array': im_data,
+            'base_64': new_im_string
+        }
 
-        if int_dimension_z == 0:
-            im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
-            buff = BytesIO()
-            plt.imshow(im)
-            plt.savefig(buff, format='png')
-            new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-            im_object_return = {
-                'np_array': im_data,
-                'base_64': new_im_string
-            }
-
-            return im_object_return
-        else:
-            # TODO: how to render 3D images if requested
-            return "mustRender3Dimages"
+        return im_object_return

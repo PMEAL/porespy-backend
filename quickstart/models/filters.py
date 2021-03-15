@@ -22,7 +22,11 @@ class LocalThickness(models.Model):
         lt = ps.filters.local_thickness(im)
         lt_data = np.array(lt)
         buff = BytesIO()
-        plt.imshow(lt)
+
+        # Always renders a 3D image regardless.
+        plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
+
+
         plt.savefig(buff, format='png')
         new_filtered_img_string = base64.b64encode(buff.getvalue()).decode("utf-8")
         im_object_return = {
