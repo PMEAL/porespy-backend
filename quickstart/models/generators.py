@@ -23,7 +23,7 @@ class Blobs(models.Model):
 
 
 
-    ### TODO: generated_image should return the base64 string and the numpy array.
+    ### TODO: use Matplotlib to generate functions using matplotlib.use('Agg') instead of directly with PIL (look at LocalThickness Model)
 
 
 

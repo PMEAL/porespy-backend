@@ -33,6 +33,6 @@ class LocalThickness(models.Model):
         return im_object_return
 
 # class ApplyChords(models.Model):
-    ### INSERT NECESSARY BUSINESS LOGIC HERE
+    # TODO: start writing business logic for ApplyChords filter
 
 
