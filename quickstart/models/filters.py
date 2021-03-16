@@ -15,11 +15,15 @@ from matplotlib import pyplot as plt
 
 class LocalThickness(models.Model):
     local_thickness_image = models.TextField(default="")
+    sizes = models.IntegerField(null=True, blank=True, default=25)
+    mode = models.TextField(default="")
 
     @property
     def local_thickness_image_filtered(self):
         im = np.array(json.loads(self.local_thickness_image))
-        lt = ps.filters.local_thickness(im)
+        sizes_int = int(self.sizes)
+        mode_str = str(self.mode)
+        lt = ps.filters.local_thickness(im, sizes=sizes_int, mode=mode_str)
         lt_data = np.array(lt)
         buff = BytesIO()
 

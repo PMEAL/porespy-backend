@@ -16,6 +16,11 @@ from matplotlib import pyplot as plt
 class PoreSizeDistribution(models.Model):
     psd_im = models.TextField(default="")
 
+
+    #bins = 10 scalar or array_like
+    #log = True boolean
+    #voxel_size = 1 scalar
+
     @property
     def psd_im_metric(self):
         return "testingPSD?.."

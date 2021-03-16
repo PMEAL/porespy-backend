@@ -36,7 +36,7 @@ class GeneratorBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
 class FilterBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LocalThickness
-        fields = ['local_thickness_image', 'local_thickness_image_filtered']
+        fields = ['local_thickness_image', 'sizes', 'mode', 'local_thickness_image_filtered']
 
 
 class MetricPoreSizeDistributionSerializer(serializers.HyperlinkedModelSerializer):
