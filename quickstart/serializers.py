@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness
+from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness, PoreSizeDistribution
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,6 +15,12 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
+class PoreSpyFuncsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PoreSpyFuncsNames
+        fields = ['porespy_funcs']
+
+
 class GeneratorBlobsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Blobs
@@ -27,13 +33,13 @@ class GeneratorBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['dimension_x', 'dimension_y', 'dimension_z', 'spacing', 'generated_image']
 
 
-class PoreSpyFuncsSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = PoreSpyFuncsNames
-        fields = ['porespy_funcs']
-
-
 class FilterBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LocalThickness
         fields = ['local_thickness_image', 'local_thickness_image_filtered']
+
+
+class MetricPoreSizeDistributionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = PoreSizeDistribution
+        fields = ['psd_im', 'psd_im_metric']

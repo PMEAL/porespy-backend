@@ -20,10 +20,17 @@ from quickstart import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+
+router.register(r'porespyfuncs', views.PoreSpyFuncsViewSet)
+# Register Generators routers:
 router.register(r'generators/blobs', views.GeneratorsBlobsViewSet)
 router.register(r'generators/bundleoftubes', views.GeneratorsBundleOfTubesViewSet)
+
+# Register Filters routers:
 router.register(r'filters/localthickness', views.FiltersLocalThicknessViewSet)
-router.register(r'porespyfuncs', views.PoreSpyFuncsViewSet)
+
+# Register Metrics routers:
+router.register(r'metrics/poresizedistribution', views.MetricsPoreSizeDistributionViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

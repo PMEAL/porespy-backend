@@ -1,8 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer, GeneratorBundleOfTubesSerializer, FilterBundleOfTubesSerializer
-from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness
+from quickstart.serializers import UserSerializer, GroupSerializer, GeneratorBlobsSerializer, PoreSpyFuncsSerializer, GeneratorBundleOfTubesSerializer, FilterBundleOfTubesSerializer, MetricPoreSizeDistributionSerializer
+from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness, PoreSizeDistribution
+
+
+# TODO: Maybe separate out all the Generators/Filters/Metrics viewsets into separate files
+#  so that this file is not too long?
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -38,14 +42,23 @@ class GeneratorsBlobsViewSet(viewsets.ModelViewSet):
 
 class GeneratorsBundleOfTubesViewSet(viewsets.ModelViewSet):
     """
-    API Endpoint that allows user to interact with the bundle_of_tubes function in inside the Generators module
+    API Endpoint that allows user to interact with the bundle_of_tubes function inside the Generators module
     """
     queryset = BundleOfTubes.objects.all()
     serializer_class = GeneratorBundleOfTubesSerializer
 
+
 class FiltersLocalThicknessViewSet(viewsets.ModelViewSet):
     """
-
+    API Endpoint that allows user to interact with the local_thickness function inside the Filters module
     """
     queryset = LocalThickness.objects.all()
     serializer_class = FilterBundleOfTubesSerializer
+
+
+class MetricsPoreSizeDistributionViewSet(viewsets.ModelViewSet):
+    """
+    API Endpoint that allows user to interact with the pore_size_distribution function inside the Metrics Module
+    """
+    queryset = PoreSizeDistribution.objects.all()
+    serializer_class = MetricPoreSizeDistributionSerializer

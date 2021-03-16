@@ -6,6 +6,7 @@ import inspect
 import porespy as ps
 import json
 
+# TODO: add function description to the func_details object returned?
 
 class PoreSpyFuncsNames(models.Model):
     @property
