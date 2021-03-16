@@ -14,7 +14,6 @@ from matplotlib import pyplot as plt
 
 # Model that uses the Blobs method in the Generators from PoreSpy
 class PoreSizeDistribution(models.Model):
-    # ['psd_im', 'psd_im_metric']
     psd_im = models.TextField(default="")
 
     @property
