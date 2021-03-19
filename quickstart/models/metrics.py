@@ -19,6 +19,8 @@ class PoreSizeDistribution(models.Model):
     bins = models.IntegerField(null=True, blank=True, default=10)
     log = models.BooleanField(default=True)
     voxel_size = models.IntegerField(null=True, blank=True, default=1)
+    x_axis_label = models.TextField(default="invasion size [voxels]")
+    y_axis_label = models.TextField(default="volume fraction invaded [voxels]")
 
     @property
     def psd_im_metric(self):
@@ -38,8 +40,8 @@ class PoreSizeDistribution(models.Model):
         plt.plot(radii, data.cdf, 'bo-')
 
         # TODO: Labels should be entered by the user.
-        plt.xlabel('invasion size [voxels]')
-        plt.ylabel('volume fraction invaded [voxels]')
+        plt.xlabel(self.x_axis_label)
+        plt.ylabel(self.y_axis_label)
         plt.savefig(buff, format='png')
         plt.close()
 
