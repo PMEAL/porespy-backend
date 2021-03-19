@@ -42,4 +42,4 @@ class FilterBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
 class MetricPoreSizeDistributionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PoreSizeDistribution
-        fields = ['psd_im', 'psd_im_metric']
+        fields = ['psd_im', 'bins', 'log', 'voxel_size', 'psd_im_metric']
