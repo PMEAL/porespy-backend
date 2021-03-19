@@ -38,15 +38,11 @@ class PoreSizeDistribution(models.Model):
 
         buff = BytesIO()
         plt.plot(radii, data.cdf, 'bo-')
-
-        # TODO: Labels should be entered by the user.
         plt.xlabel(self.x_axis_label)
         plt.ylabel(self.y_axis_label)
         plt.savefig(buff, format='png')
         plt.close()
-
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
-        # return new_im_string
         im_object_return = {
             'np_array': im,
             'base_64': new_im_string,
@@ -63,8 +59,3 @@ class PoreSizeDistribution(models.Model):
         # data.bin_centers
         # data.bin_edges
         # data.bin_widths
-
-
-
-
-        return "testingPSD?.."

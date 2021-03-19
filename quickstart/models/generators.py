@@ -54,6 +54,7 @@ class Blobs(models.Model):
         return im_object_return
 
 
+# Model that uses the BundleOfTubes method in the Generators from PoreSpy
 class BundleOfTubes(models.Model):
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
     dimension_y = models.IntegerField(null=True, blank=True, default=500)
