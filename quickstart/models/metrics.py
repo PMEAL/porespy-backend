@@ -29,8 +29,6 @@ class PoreSizeDistribution(models.Model):
         int_voxel_size = int(self.voxel_size)
         data = ps.metrics.pore_size_distribution(im=im, bins=int_bins, log=log_bool, voxel_size=int_voxel_size)
 
-        # return data
-
         if log_bool:
             radii = data.logR
         else:
@@ -39,13 +37,11 @@ class PoreSizeDistribution(models.Model):
         buff = BytesIO()
         plt.plot(radii, data.cdf, 'bo-')
 
-        # Labels should be entered by the user.
+        # TODO: Labels should be entered by the user.
         plt.xlabel('invasion size [voxels]')
         plt.ylabel('volume fraction invaded [voxels]')
         plt.savefig(buff, format='png')
         plt.close()
-
-
 
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
         # return new_im_string

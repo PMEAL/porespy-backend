@@ -29,7 +29,6 @@ class LocalThickness(models.Model):
         buff = BytesIO()
 
         # Always renders a 3D image regardless.
-
         plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
 
         plt.savefig(buff, format='png')

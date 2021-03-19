@@ -76,7 +76,6 @@ class BundleOfTubes(models.Model):
         im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
         im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
         buff = BytesIO()
-        # plt.imshow(im)
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
         plt.savefig(buff, format='png')
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
