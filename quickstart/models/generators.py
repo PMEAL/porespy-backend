@@ -26,6 +26,7 @@ class Blobs(models.Model):
 
     @property
     def generated_image(self):
+        plt.close()
         int_dimension_x = int(self.dimension_x)
         int_dimension_y = int(self.dimension_y)
         int_dimension_z = int(self.dimension_z)
@@ -49,6 +50,7 @@ class Blobs(models.Model):
             'base_64': new_im_string
         }
 
+        plt.close()
         return im_object_return
 
 
@@ -60,6 +62,7 @@ class BundleOfTubes(models.Model):
 
     @property
     def generated_image(self):
+        plt.close()
         int_dimension_x = int(self.dimension_x)
         int_dimension_y = int(self.dimension_y)
         int_dimension_z = int(self.dimension_z)
@@ -82,4 +85,5 @@ class BundleOfTubes(models.Model):
             'base_64': new_im_string
         }
 
+        plt.close()
         return im_object_return

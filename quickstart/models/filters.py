@@ -20,6 +20,7 @@ class LocalThickness(models.Model):
 
     @property
     def local_thickness_image_filtered(self):
+        plt.close()
         im = np.array(json.loads(self.local_thickness_image))
         sizes_int = int(self.sizes)
         mode_str = str(self.mode)
@@ -28,8 +29,8 @@ class LocalThickness(models.Model):
         buff = BytesIO()
 
         # Always renders a 3D image regardless.
-        plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
 
+        plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
 
         plt.savefig(buff, format='png')
         new_filtered_img_string = base64.b64encode(buff.getvalue()).decode("utf-8")
@@ -38,6 +39,7 @@ class LocalThickness(models.Model):
             'base_64': new_filtered_img_string
         }
 
+        plt.close()
         return im_object_return
 
 

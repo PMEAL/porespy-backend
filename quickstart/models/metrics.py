@@ -22,6 +22,7 @@ class PoreSizeDistribution(models.Model):
 
     @property
     def psd_im_metric(self):
+        plt.close()
         im = np.array(json.loads(self.psd_im))
         int_bins = int(self.bins)
         log_bool = str(self.log) == 'True'
