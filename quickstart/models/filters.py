@@ -31,7 +31,7 @@ class LocalThickness(models.Model):
 
         # Always renders a 3D image regardless.
         plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
-        plt.savefig(buff, format='png')
+        plt.savefig(buff, format='png', transparent=True)
         new_filtered_img_string = base64.b64encode(buff.getvalue()).decode("utf-8")
         im_object_return = {
             'np_array': lt_data,

@@ -40,22 +40,30 @@ class PoreSizeDistribution(models.Model):
         plt.plot(radii, data.cdf, 'bo-')
         plt.xlabel(self.x_axis_label)
         plt.ylabel(self.y_axis_label)
-        plt.savefig(buff, format='png')
+        plt.savefig(buff, format='png', transparent=True)
         plt.close()
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+
+        file_headers = ['radii', 'cdf', 'pdf', 'satn']
+        csv_string = ",".join(file_headers) + "\n"
+        # csv_string = "here?"
+
+        for i in range(len(radii)):
+            csv_string += str(radii[i]) + "," + str(data.cdf[i]) + "," + str(data.pdf[i]) + "," + str(data.satn[i]) + "\n"
+
         im_object_return = {
             'np_array': im,
             'base_64': new_im_string,
-            'data': data
+            'csv_string': csv_string,
+            'satn': data.satn
+
+            # 'data_radii': radii,
+            # 'data_cdf': data.cdf,
+            # 'data_pdf': data.pdf,
+            # 'data_satn': data.satn,
+            # 'data_bin_centers': data.bin_centers,
+            # 'data_bin_edges': data.bin_edges,
+            # 'data_bin_widths': data.bin_widths
         }
 
         return im_object_return
-
-        # ps.metrics.pore_size_distribution return a named tuple
-        # with the following data
-        # data.pdf
-        # data.cdf
-        # data.satn
-        # data.bin_centers
-        # data.bin_edges
-        # data.bin_widths

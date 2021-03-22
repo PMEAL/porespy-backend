@@ -1,6 +1,4 @@
 # generators.py is concerned with the business logic of the generators modules
-# e.g. The GeneratorBlobs handles the business logic of generating a blob,
-# and returns the image in a base64 string to the front end.
 
 from django.db import models
 import base64
@@ -43,7 +41,7 @@ class Blobs(models.Model):
         im_data = np.array(im)
         buff = BytesIO()
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
-        plt.savefig(buff, format='png')
+        plt.savefig(buff, format='png', transparent=True)
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
         im_object_return = {
             'np_array': im_data,
@@ -78,7 +76,7 @@ class BundleOfTubes(models.Model):
         im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
         buff = BytesIO()
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
-        plt.savefig(buff, format='png')
+        plt.savefig(buff, format='png', transparent=True)
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
         im_object_return = {
             'np_array': im_data,
