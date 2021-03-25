@@ -50,19 +50,13 @@ class PoreSizeDistribution(models.Model):
         for i in range(len(radii)):
             csv_string += str(radii[i]) + "," + str(data.cdf[i]) + "," + str(data.pdf[i]) + "," + str(data.satn[i]) + "\n"
 
+        # im_object_return contains the numpy array of the input image,
+        # the base64 representation of the generated metric,
+        # and the string of contents for the .csv file
         im_object_return = {
             'np_array': im,
             'base_64': new_im_string,
-            'csv_string': csv_string,
-            'satn': data.satn
-
-            # 'data_radii': radii,
-            # 'data_cdf': data.cdf,
-            # 'data_pdf': data.pdf,
-            # 'data_satn': data.satn,
-            # 'data_bin_centers': data.bin_centers,
-            # 'data_bin_edges': data.bin_edges,
-            # 'data_bin_widths': data.bin_widths
+            'csv_string': csv_string
         }
 
         return im_object_return

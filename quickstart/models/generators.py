@@ -1,4 +1,4 @@
-# generators.py is concerned with the business logic of the generators modules
+# generators.py contains django models that are concerned with the business logic of the porespy.generators modules
 
 from django.db import models
 import base64
@@ -14,7 +14,7 @@ matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
 
-# Model that uses the Blobs method in the Generators from PoreSpy
+# Model that uses the Blobs method porespy.generators, and returns the image in the generated_image property.
 class Blobs(models.Model):
     porosity = models.FloatField(null=True, blank=True, default=0.6)
     blobiness = models.IntegerField(null=True, blank=True, default=2)
@@ -36,13 +36,14 @@ class Blobs(models.Model):
         else:
             shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
 
-        # Generator blob form PoreSpy, convert to numpy array, and make it RGB.
+        # generate blob, save into bytes, and send back the base64 string and numpy array to the front end.
         im = ps.generators.blobs(shape=shape_array, porosity=float_porosity, blobiness=int_blobiness).tolist()
         im_data = np.array(im)
         buff = BytesIO()
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
         plt.savefig(buff, format='png', transparent=True)
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        # im_object_return contains the numpy array and base64 representations of the generated image.
         im_object_return = {
             'np_array': im_data,
             'base_64': new_im_string
@@ -52,7 +53,7 @@ class Blobs(models.Model):
         return im_object_return
 
 
-# Model that uses the BundleOfTubes method in the Generators from PoreSpy
+# Model that uses the BundleOFTubes method porespy.generators, and returns the image in the generated_image property.
 class BundleOfTubes(models.Model):
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
     dimension_y = models.IntegerField(null=True, blank=True, default=500)
@@ -72,12 +73,15 @@ class BundleOfTubes(models.Model):
         else:
             shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
 
+        # generate bundle_of_tubes, save into bytes, and send back the base64 string and numpy array to the front end.
         im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
+        # convert array of numbers into array of booleans so it can be filtered/passed around.
         im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
         buff = BytesIO()
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
         plt.savefig(buff, format='png', transparent=True)
         new_im_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        # im_object_return contains the numpy array and base64 representations of the generated image.
         im_object_return = {
             'np_array': im_data,
             'base_64': new_im_string

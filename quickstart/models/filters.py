@@ -33,6 +33,7 @@ class LocalThickness(models.Model):
         plt.imshow(np.atleast_3d(lt)[:, :, 0], interpolation="none", origin="lower")
         plt.savefig(buff, format='png', transparent=True)
         new_filtered_img_string = base64.b64encode(buff.getvalue()).decode("utf-8")
+        # im_object_return contains the numpy array and base64 representations of the generated image.
         im_object_return = {
             'np_array': lt_data,
             'base_64': new_filtered_img_string
@@ -43,6 +44,6 @@ class LocalThickness(models.Model):
 
 
 # class ApplyChords(models.Model):
-    # TODO: start writing business logic for ApplyChords filter
+    # TODO: start writing business logic for ApplyChords filter (and remaining filter functions)
 
 
