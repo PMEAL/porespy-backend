@@ -46,7 +46,6 @@ class PoreSizeDistribution(models.Model):
 
         file_headers = ['radii', 'cdf', 'pdf', 'satn']
         csv_string = ",".join(file_headers) + "\n"
-        # csv_string = "here?"
 
         for i in range(len(radii)):
             csv_string += str(radii[i]) + "," + str(data.cdf[i]) + "," + str(data.pdf[i]) + "," + str(data.satn[i]) + "\n"

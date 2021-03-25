@@ -15,6 +15,10 @@ Backend written in Django/Python for PoreSpy.
     - io
     - tools
 
+## Instructions
+
+When you pull the code from the repo, run `python manage.py runserver` to start the REST API. You can view the back-end at `http://localhost:3000/`.
+
 ## Contact:
 
 Jeff Gostick (jgostick@uwaterloo.ca)
