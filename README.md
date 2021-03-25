@@ -1,6 +1,7 @@
 ## PoreSpy Backend
 
-Backend written in Django/Python for PoreSpy.
+This repo contains the back end of PoreSpy, the web app of a python library of image analysis tools used to extract
+information from 3D images of porous materials. The back end is written in Django/Python, and is a REST API.
 
 ## TODO:
 
@@ -17,7 +18,8 @@ Backend written in Django/Python for PoreSpy.
 
 ## Instructions
 
-When you pull the code from the repo, run `python manage.py runserver` to start the REST API. You can view the back-end at `http://localhost:3000/`.
+When you pull the code from the repo, run `python manage.py runserver` to start the REST API. 
+You can view the back-end at `http://localhost:3000/`.
 
 ## Contact:
 
