@@ -53,7 +53,7 @@ class Blobs(models.Model):
         return im_object_return
 
 
-# Model that uses the BundleOFTubes method porespy.generators, and returns the image in the generated_image property.
+# Model that uses the BundleOfTubes method porespy.generators, and returns the image in the generated_image property.
 class BundleOfTubes(models.Model):
     dimension_x = models.IntegerField(null=True, blank=True, default=500)
     dimension_y = models.IntegerField(null=True, blank=True, default=500)

@@ -18,8 +18,18 @@ information from 3D images of porous materials. The back end is written in Djang
 
 ## Instructions
 
-When you pull the code from the repo, run `python manage.py runserver` to start the REST API. 
-You can view the back-end at `http://localhost:3000/`.
+When you pull the code from the repo, make sure to have the following libraries installed:
+
+|Python Package                 |Command                            |
+|-------------------------------|-----------------------------------|
+|Django                         |`pip install Django`               |
+|Django REST Framework          |`pip install djangorestframework`  |
+|Django CORS Headers            |`pip install django-cors-headers`  |
+
+Run `python manage.py runserver` to start the REST API. You can view the back-end at `http://localhost:8000/`.
+If there are error messages in the terminal, make sure to resolve these first as the REST API will not run until
+these errors have been resolved.
+
 
 ## Contact:
 
