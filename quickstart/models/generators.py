@@ -123,9 +123,6 @@ class LatticeSpheres(models.Model):
         else:
             shape_array = [int_dimension_x, int_dimension_y, int_dimension_z]
 
-        # generate bundle_of_tubes, save into bytes, and send back the base64 string and numpy array to the front end.
-        # im = ps.generators.bundle_of_tubes(shape=shape_array, spacing=float_spacing).tolist()
-
         im = ps.generators.lattice_spheres(
             shape=shape_array,
             # spacing=int_spacing
@@ -135,8 +132,6 @@ class LatticeSpheres(models.Model):
             lattice=str_lattice
         )
 
-        # convert array of numbers into array of booleans so it can be filtered/passed around.
-        # im_data = np.array([[False if x == [0.0] else True for x in s] for s in im])
         im_data = np.array(im)
         buff = BytesIO()
         plt.imshow(np.atleast_3d(im)[:, :, 0], interpolation="none", origin="lower")
