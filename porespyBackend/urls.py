@@ -25,6 +25,7 @@ router.register(r'porespyfuncs', views.PoreSpyFuncsViewSet)
 # Register Generators routers:
 router.register(r'generators/blobs', views.GeneratorsBlobsViewSet)
 router.register(r'generators/bundleoftubes', views.GeneratorsBundleOfTubesViewSet)
+router.register(r'generators/latticespheres', views.GeneratorsLatticeSpheresViewSet)
 
 # Register Filters routers:
 router.register(r'filters/localthickness', views.FiltersLocalThicknessViewSet)

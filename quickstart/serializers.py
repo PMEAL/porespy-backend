@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LocalThickness, PoreSizeDistribution
+from .models import PoreSpyFuncsNames, Blobs, BundleOfTubes, LatticeSpheres, LocalThickness, PoreSizeDistribution
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -31,6 +31,14 @@ class GeneratorBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BundleOfTubes
         fields = ['dimension_x', 'dimension_y', 'dimension_z', 'spacing', 'generated_image']
+
+
+class GeneratorLatticeSpheresSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = LatticeSpheres
+        fields = ['dimension_x', 'dimension_y', 'dimension_z', 'radius', 'offset', 'lattice', 'generated_image']
+        # TODO: when newest version of porespy is released, use the commented line instead.
+        # fields = ['dimension_x', 'dimension_y', 'dimension_z', 'radius', 'spacing', 'offset', 'smooth', 'lattice', 'generated_image']
 
 
 class FilterBundleOfTubesSerializer(serializers.HyperlinkedModelSerializer):
